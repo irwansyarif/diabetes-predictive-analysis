@@ -37,6 +37,7 @@ Menjelaskan pernyataan masalah latar belakang:
 # Data Understanding
 
 Jenis | Keterangan
+--- | ---
 Sumber | : [Kaggle](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset)
 Kategori | Kesehatan
 Ukuran File | CSV (3,7MB)
@@ -45,15 +46,15 @@ Ukuran File | CSV (3,7MB)
 
 ### Variabel-variabel pada Diabetes Prediction dataset adalah sebagai berikut:
 
-- gender: Jenis kelamin
-- age: Usia
-- hypertension: Riwayat hipertensi
-- heart_disease: Riwayat penyakit jantung
-- smoking_history: Riwayat merokok
-- bmi: Body Mass Index
-- HbA1c_level: Level HbA1c
-- blood_glucose_level: Kadar glukosa dalam darah
-- diabetes: Label target (0 = tidak diabetes, 1 = diabetes)
+- `gender`: Jenis kelamin
+- `age`: Usia
+- `hypertension`: Riwayat hipertensi
+- `heart_disease`: Riwayat penyakit jantung
+- `smoking_history`: Riwayat merokok
+- `bmi`: Body Mass Index
+- `HbA1c_level`: Level HbA1c
+- `blood_glucose_level`: Kadar glukosa dalam darah
+- `diabetes`: Label target (0 = tidak diabetes, 1 = diabetes)
 
 ---
 
@@ -64,6 +65,7 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 1. Distribusi nilai age, bmi, HbA1c_level, dan blood_glucose_level
 ![distribution_data]( "Gambar Sebaran Dataset")
 
+(./distribution_data.png)
 > Gambar 3.1 Korelasi umur dengan fitur lainnya
 
 2. Proporsi jumlah penderita diabetes vs tidak
@@ -71,11 +73,15 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 
 ![correlation_label]( "Gambar Korelasi antar label")
 
+(./korelasi antar label.png)
 > Gambar 3.2 Korelasi umur dengan fitur lainnya
 
 # Data Preparation
 
----
+- **Mendeteksi outliers**. Outliers adalah titik data yang berbeda secara signifikan dari pengamatan lainnya sehingga dapat berakibat buruk pada model prediksi. Pada proyek ini menggunakan IQR *(InterQuartile Range)* untuk mendeteksi outliers. IQR dapat menentukan data outliers yang kondisinya di luar batas bawah atau batas atas dari dataset. IQR dapat divisualkan menggunakan boxplot.
+- **Split Data** atau pembagian dataset menjadi data latih dan data uji menggunakan bantuan [train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html). Pembagian dataset ini bertujuan agar nantinya dapat digunakan untuk melatih dan mengevaluasi kinerja model. Pada proyek ini, 80% dataset digunakan untuk melatih model, dan 20% sisanya digunakan untuk mengevaluasi model.
+- **Normalisasi**. Pada proyek ini menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html), yaitu teknik normalisasi yang mentransformasikan nilai fitur atau variabel ke dalam rentang [0,1] yang berarti bahwa nilai minimum dan maksimum dari fitur/variabel masing-masing adalah 0 dan 1.
+
 
 ## Tahap preparation
 
@@ -100,28 +106,13 @@ Algoritma yang digunakan pada model klasifikasi ini adalah sebagai berikut:
 
 ---
 
-Pada proyek ini menggunakan model _deep learning_ bertipe _classification_ yang berarti jika mendekati 100% accuracy, performanya baik, sedangkan jika dibawah 75%, maka performanya buruk.
-Metrik yang akan kita gunakan pada prediksi ini adalah _Accuracy_, metrik ini menghitung jumlah prediksi yang benar selisih total prediksi yang dilakukan. Accuracy didefinisikan dalam persamaan berikut:  
-$\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}$
+Pada tahap modeling ini dibuat beberapa model dengan algoritma yang berbeda-beda. Pada proyek ini akan dibuat 4 model, diantaranya yaitu menggunakan KNN, Random Forest, SVM, Decision Tree dan Naive Bayes.
+Setelah melatih keempat model tersebut, didapatkan metriks akurasi sebagai berikut seperti pada diagram di bawah ini.
 
-Selain metrik _accuracy_ akan digunakan _precision, recall, dan f1-score_ yang dibuat dengan fungsi _classification_report_ yang disediakan oleh _library sklearn_
+![Perbandingan Akurasi Model](./model_accuracy_comparison.png)
 
-Presisi digunakan untuk mengukur seberapa dapat diandalkan sebuah model ketika memberikan prediksi terhadap suatu kelas/_target_. Presisi dapat didefinisikan sebagai berikut:  
-$\text{Precision} = \frac{TP}{TP+FP}$
+Dari hasil tersebut dapat diketahui bahwa model dengan algoritma Random Forest memiliki kinerja yang lebih baik. Untuk itu model tersebut yang akan dipilih untuk digunakan.
 
-_Recall_ digunakan untuk mengukur kemampuan model untuk memprediksi kelas _True Positive. Recall_ dapat didefinisikan sebagai berikut:  
-$\text{Recall} = \frac{TP}{TP+FN}$
-
-_F1-Score_ digunakan untuk mencari titik seimbang antara Presisi dan _Recall_, _F1-Score_ didefinisikan sebagai berikut:  
-$\text{F1-Score} = \frac{2 \* Precision \* Recall}{Precision+Recall}$
-
-Dengan:
-
-- TP: True Positive
-- TN: True Negative
-- FP: False Positive
-- FN: False Negative
-  ![Comparison_model]("Perbandingan performa model")
 
 # Referensi
 
