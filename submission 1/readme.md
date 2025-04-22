@@ -32,6 +32,8 @@ Menjelaskan pernyataan masalah latar belakang:
   - Decision tree
   - Random Forest
   - Support Vector Machine (SVM)
+  - KNN
+  - Naive Bayes
 - Menggunakan hypermeter tuning untuk meningkatkan performa akurasi.
 
 # Data Understanding
@@ -69,7 +71,7 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 2. Proporsi jumlah penderita diabetes vs tidak
 3. Korelasi antar fitur numerik terhadap label diabetes
 
-![correlation_label](./korelasi antar label.png)
+![correlation_label]( ./korelasi_label.png)
 > Gambar 3.2 Korelasi umur dengan fitur lainnya
 
 # Data Preparation
