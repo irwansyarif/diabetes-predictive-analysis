@@ -92,11 +92,19 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 Algoritma yang digunakan pada model klasifikasi ini adalah sebagai berikut:
 
 1. Decision Tree
-   Membagi data berdasarkan fitur yang paling informatif menggunakan struktur pohon. Kelebihan: Mudah diinterpretasi, depat dalam melakukan pelatihan model. Kekurangan: Rentan terhadap overfitting jika tidak dilakukan pengeliminasian.
-2. Random Forest
-   Menggunakan banyak pohon keputusan dan melakukan voting untuk hasil akhir.
-3. Support Vector Machine (SVM)
-   Memisahkan kelas hyperplane optimal di ruang vektor tinggi.
+Membagi data berdasarkan fitur yang paling informatif menggunakan struktur pohon.
+
+2. K-Nearest Neighbors (KNN)
+Mengklasifikasikan data berdasarkan kedekatan dengan data tetangga terdekatnya. Jumlah tetangga yang dipertimbangkan ditentukan oleh nilai K.
+
+3. Naive Bayes
+Berdasarkan Teorema Bayes dengan asumsi fitur-fitur bersifat independen. Cocok untuk klasifikasi teks dan data berdimensi tinggi.
+
+4. Random Forest
+Menggunakan banyak pohon keputusan dan melakukan voting untuk hasil akhir guna meningkatkan akurasi dan mengurangi overfitting.
+
+5. Support Vector Machine (SVM)
+Memisahkan kelas menggunakan hyperplane optimal di ruang berdimensi tinggi untuk mencapai margin maksimum antar kelas.
 
 # Evaluation
 
