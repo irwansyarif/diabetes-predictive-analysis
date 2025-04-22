@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning Submission 1- Irwan Syarif Hidayatullah
 
 # Domain Proyek
 
@@ -38,7 +38,7 @@ Menjelaskan pernyataan masalah latar belakang:
 
 Jenis | Keterangan
 --- | ---
-Sumber | : [Kaggle](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset)
+Sumber | [Kaggle](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset)
 Kategori | Kesehatan
 Ukuran File | CSV (3,7MB)
 
@@ -63,17 +63,13 @@ Ukuran File | CSV (3,7MB)
 Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan grafik dan visualisasi:
 
 1. Distribusi nilai age, bmi, HbA1c_level, dan blood_glucose_level
-![distribution_data]( "Gambar Sebaran Dataset")
-
-(./distribution_data.png)
+![distribution_data]( ./distribution_data.png)
 > Gambar 3.1 Korelasi umur dengan fitur lainnya
 
 2. Proporsi jumlah penderita diabetes vs tidak
 3. Korelasi antar fitur numerik terhadap label diabetes
 
-![correlation_label]( "Gambar Korelasi antar label")
-
-(./korelasi antar label.png)
+![correlation_label](./korelasi antar label.png)
 > Gambar 3.2 Korelasi umur dengan fitur lainnya
 
 # Data Preparation
