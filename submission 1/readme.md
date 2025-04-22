@@ -64,6 +64,7 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 1. Distribusi nilai age, bmi, HbA1c_level, dan blood_glucose_level
 ![distribution_data]( "Gambar Sebaran Dataset")
 
+/distribution_data.png
 > Gambar 3.1 Korelasi umur dengan fitur lainnya
 
 2. Proporsi jumlah penderita diabetes vs tidak
@@ -71,6 +72,7 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 
 ![correlation_label]( "Gambar Korelasi antar label")
 
+/korelasi antar label.png
 > Gambar 3.2 Korelasi umur dengan fitur lainnya
 
 # Data Preparation
