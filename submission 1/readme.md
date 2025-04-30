@@ -46,12 +46,26 @@ Ukuran File | CSV (3,7MB)
 
 ---
 
+### Jumlah Data
+Dataset memiliki total 100,000 baris dan 9 kolom, yang terdiri dari 8 fitur dan 1 label target (diabetes).
+
+### Kondisi Data
+- Missing Value:
+Tidak ditemukan nilai kosong secara eksplisit pada dataset. Namun, pada fitur smoking_history, terdapat nilai Unknown yang berfungsi sebagai kategori tersendiri dan perlu diperlakukan secara khusus.
+
+- Duplikat:
+Sudah dilakukan pemeriksaan, terdapat 3854 Duplikat yang ada pada dataset ini.
+
+- Outlier:
+Outlier terdeteksi pada kolom bmi dan blood_glucose_level berdasarkan metode Interquartile Range (IQR). Penanganan dilakukan pada tahap data preparatsion.
+
 ### Variabel-variabel pada Diabetes Prediction dataset adalah sebagai berikut:
+
 
 - `gender`: Jenis kelamin
 - `age`: Usia
-- `hypertension`: Riwayat hipertensi
-- `heart_disease`: Riwayat penyakit jantung
+- `hypertension`: Riwayat hipertensi (0 = tidak memiliki riwayat hipertensi, 1 = memiliki riwayat hipertensi)
+- `heart_disease`: Riwayat penyakit jantung (0 = tidak memiliki riwayat penyakit jantung, 1 = memiliki riwayat penyakit jantung)
 - `smoking_history`: Riwayat merokok
 - `bmi`: Body Mass Index
 - `HbA1c_level`: Level HbA1c
@@ -76,9 +90,23 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 
 # Data Preparation
 
-- **Mendeteksi outliers**. Outliers adalah titik data yang berbeda secara signifikan dari pengamatan lainnya sehingga dapat berakibat buruk pada model prediksi. Pada proyek ini menggunakan IQR *(InterQuartile Range)* untuk mendeteksi outliers. IQR dapat menentukan data outliers yang kondisinya di luar batas bawah atau batas atas dari dataset. IQR dapat divisualkan menggunakan boxplot.
-- **Split Data** atau pembagian dataset menjadi data latih dan data uji menggunakan bantuan [train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html). Pembagian dataset ini bertujuan agar nantinya dapat digunakan untuk melatih dan mengevaluasi kinerja model. Pada proyek ini, 80% dataset digunakan untuk melatih model, dan 20% sisanya digunakan untuk mengevaluasi model.
-- **Normalisasi**. Pada proyek ini menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html), yaitu teknik normalisasi yang mentransformasikan nilai fitur atau variabel ke dalam rentang [0,1] yang berarti bahwa nilai minimum dan maksimum dari fitur/variabel masing-masing adalah 0 dan 1.
+- **Handling Duplicate**  
+  Dilakukan pengecekan data duplikat dan tidak ditemukan duplikasi, sehingga tidak ada data yang dihapus.
+
+- **Handling Outlier**  
+  Penanganan outlier dilakukan menggunakan metode IQR (Interquartile Range). Data yang berada di luar batas bawah dan batas atas dari rentang IQR dibuang agar tidak mengganggu proses pelatihan model, khususnya pada kolom `bmi` dan `blood_glucose_level`.
+
+- **Handling Categorical Features**  
+  Kolom kategori seperti `gender` dan `smoking_history` diolah menggunakan teknik encoding. Teknik ini bertujuan agar data dapat diterima oleh algoritma machine learning yang memerlukan data numerik.
+
+- **Drop Kolom**  
+  Tidak ada kolom yang dihapus karena semua fitur dianggap relevan untuk kebutuhan prediksi.
+
+- **Normalisasi Fitur**  
+  Normalisasi dilakukan menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html) agar seluruh nilai berada dalam rentang 0 hingga 1. Ini penting agar model tidak bias terhadap fitur dengan skala besar.
+
+- **Split Data**  
+  Dataset dibagi menjadi data latih dan data uji menggunakan `train_test_split` dengan proporsi 80% untuk pelatihan dan 20% untuk pengujian. Hal ini bertujuan untuk mengevaluasi performa model secara adil pada data yang belum pernah dilihat.
 
 
 ## Tahap preparation
@@ -89,24 +117,36 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 
 # Modeling
 
----
+Model yang digunakan bertujuan untuk memprediksi apakah seorang pasien mengidap diabetes atau tidak berdasarkan fitur-fitur yang tersedia. Berikut adalah penjelasan masing-masing algoritma beserta parameter yang digunakan:
 
-Algoritma yang digunakan pada model klasifikasi ini adalah sebagai berikut:
+1. **Decision Tree**  
+   Algoritma ini membagi data berdasarkan fitur yang paling memberikan informasi (information gain) secara rekursif hingga mencapai keputusan akhir.  
+   - Parameter: Menggunakan **default** dari `sklearn.tree.DecisionTreeClassifier`.
 
-1. Decision Tree
-Membagi data berdasarkan fitur yang paling informatif menggunakan struktur pohon.
+2. **K-Nearest Neighbors (KNN)**  
+   Model ini mengklasifikasikan data baru berdasarkan label dari K tetangga terdekatnya.  
+   - Parameter:
+     - `n_neighbors = 5` (default)
+     - `metric = 'minkowski'` (default)
 
-2. K-Nearest Neighbors (KNN)
-Mengklasifikasikan data berdasarkan kedekatan dengan data tetangga terdekatnya. Jumlah tetangga yang dipertimbangkan ditentukan oleh nilai K.
+3. **Naive Bayes**  
+   Berdasarkan Teorema Bayes dengan asumsi bahwa semua fitur saling independen. Cocok digunakan untuk data bersifat kategorikal maupun kontinyu.  
+   - Parameter: Menggunakan **default** dari `sklearn.naive_bayes.GaussianNB`.
 
-3. Naive Bayes
-Berdasarkan Teorema Bayes dengan asumsi fitur-fitur bersifat independen. Cocok untuk klasifikasi teks dan data berdimensi tinggi.
+4. **Random Forest**  
+   Merupakan ensemble learning yang menggabungkan banyak pohon keputusan (decision tree) dan melakukan voting terhadap hasilnya.  
+   - Parameter:
+     - `n_estimators = 100` (default)
+     - `criterion = 'gini'` (default)
 
-4. Random Forest
-Menggunakan banyak pohon keputusan dan melakukan voting untuk hasil akhir guna meningkatkan akurasi dan mengurangi overfitting.
+5. **Support Vector Machine (SVM)**  
+   Mencari hyperplane terbaik yang memisahkan dua kelas dengan margin maksimal.  
+   - Parameter:
+     - `C = 1.0` (default)
+     - `kernel = 'rbf'` (default)
+     - `gamma = 'scale'` (default)
 
-5. Support Vector Machine (SVM)
-Memisahkan kelas menggunakan hyperplane optimal di ruang berdimensi tinggi untuk mencapai margin maksimum antar kelas.
+Setiap model di atas dilatih menggunakan data latih dan dievaluasi menggunakan data uji untuk mengetahui performa klasifikasinya.
 
 # Evaluation
 

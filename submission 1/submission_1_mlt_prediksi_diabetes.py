@@ -56,7 +56,10 @@ df
 
 df.info()
 
-"""# EDA"""
+"""# EDA
+
+Exploratory data analysis merupakan proses investigasi awal pada data untuk menganalisis karakteristik, menemukan pola, anomali, dan memeriksa asumsi pada data. Teknik ini biasanya menggunakan bantuan statistik dan representasi grafis atau visualisasi.
+"""
 
 cat_features = ['gender']
 num_features = ['age','hypertension','heart_disease','bmi','HbA1c_level','blood_glucose_level','diabetes']
@@ -149,7 +152,10 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-"""# Make Models"""
+"""# Make Models
+
+Membuat beberapa model yang untuk mencari model mana yang lebih akurat diantara yang lainnya.
+"""
 
 # Menyiapkan dataframe untuk analisis model
 models = pd.DataFrame(index=['accuracy_score'],
@@ -243,7 +249,12 @@ nb_pred = model_nb.predict(X_test)
 # Hitung metriks akurasi dan simpan hasilnya
 models.loc['accuracy_score','Naive Bayes'] = accuracy_score(y_test, nb_pred)
 
-"""# Evaluasi model"""
+"""# Evaluasi model
+
+Proses Evaluasi Model merupakan tahap untuk membuktikan suatu model cocok dengan tujuan yang telah ditentukan dan untuk memastikan model mampu membuat prediksi yang akurat.
+"""
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 y_pred_knn = model_knn.predict(X_test)
 y_pred_svm = svm_model.predict(X_test)
@@ -251,36 +262,77 @@ y_pred_rf = rf_model.predict(X_test)
 y_pred_dt = dt_model.predict(X_test)
 y_pred_nb = model_nb.predict(X_test)
 
-# Calculate accuracy
-accuracy_scores = {
-    "KNN": accuracy_score(y_test, knn_pred),
-    "SVM": accuracy_score(y_test, y_pred_svm),
-    "Random Forest": accuracy_score(y_test, y_pred_rf),
-    "Decision Tree": accuracy_score(y_test, y_pred_dt),
-    "Naive Bayes": accuracy_score(y_test, nb_pred)
-}
+accuracy_scores = {}
 
-plt.figure(figsize=(8, 5))
-bars = plt.bar(accuracy_scores.keys(), accuracy_scores.values(), color=['blue','orange' ,'green', 'red','purple'])
-;
-# Add accuracy values on top of bars
-for bar in bars:
-    yval = bar.get_height()
-    plt.text(bar.get_x() + bar.get_width()/2, yval, f"{yval:.4f}", ha='center', va='bottom', fontsize=12)
+# Calculate evaluation metrics for each model
+def evaluate_model(y_true, y_pred, model_name):
+    accuracy = accuracy_score(y_true, y_pred)
+    precision = precision_score(y_true, y_pred)
+    recall = recall_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred)
+    print(f"Metrics for {model_name}:")
+    print(f"  Accuracy: {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall: {recall:.4f}")
+    print(f"  F1-score: {f1:.4f}")
+    print("-" * 20)
 
-plt.xlabel("Model")
-plt.ylabel("Accuracy Score")
-plt.ylim(0, 1)  # Accuracy is between 0 and 1
-plt.title("Model Performance Comparison")
-plt.grid(axis='y', linestyle='--', alpha=0.7)
+evaluate_model(y_test, y_pred_knn, "KNN")
+evaluate_model(y_test, y_pred_svm, "SVM")
+evaluate_model(y_test, y_pred_rf, "Random Forest")
+evaluate_model(y_test, y_pred_dt, "Decision Tree")
+evaluate_model(y_test, y_pred_nb, "Naive Bayes")
 
-# Save the plot as an image
-plt.savefig("model_accuracy_comparison.png", dpi=300, bbox_inches='tight')
+"""Kesimpulan Evaluasi Dari setiap model
 
-# Show the plot
+- Model Random Forest memberikan hasil terbaik dengan kombinasi accuracy, precision, recall, dan F1-score yang paling seimbang dan tinggi.
+
+- KNN memiliki accuracy yang tinggi, namun recall relatif rendah, yang berarti masih banyak kasus positif yang gagal terdeteksi.
+
+- SVM menghasilkan precision tinggi, namun recall cukup rendah, artinya model sangat berhati-hati (minim false positive), tapi kurang menangkap banyak kasus positif.
+
+- Naive Bayes memiliki performa yang jauh lebih rendah dibandingkan model lainnya.
+
+## Membuat grafik perbandingan dari kelima model yang telah dibuat
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Skor akurasi dan nama model
+model_names = ['KNN', 'SVM', 'Random Forest', 'Decision Tree', 'Naive Bayes']
+accuracy_scores = [
+    accuracy_score(y_test, y_pred_knn),
+    accuracy_score(y_test, y_pred_svm),
+    accuracy_score(y_test, y_pred_rf),
+    accuracy_score(y_test, y_pred_dt),
+    accuracy_score(y_test, y_pred_nb)
+]
+
+# Warna berbeda untuk setiap model
+colors = ['Blue', 'Orange', 'Green', 'Red', 'Purple']  # Blue, Orange, Green, Red, Purple
+x = np.arange(len(model_names))
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(x, accuracy_scores, color=colors)
+
+# Menambahkan nilai akurasi di atas bar
+for bar, score in zip(bars, accuracy_scores):
+    plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+             f'{score:.4f}', ha='center', va='bottom', fontsize=10, fontweight='bold')
+
+# Konfigurasi tampilan
+plt.xticks(x, model_names)
+plt.ylim(0, 1.05)
+plt.ylabel('Accuracy')
+plt.title('Accuracy Score per Model')
+plt.legend(bars, model_names, loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=3)
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+
+plt.tight_layout()
 plt.show()
 
-"""##### Dari diagram diatas dapat kita lihat bahwa model Random Forest adalah Model tertinggi daripada keempat model lainnya. Dengan itu, maka model ini yang akan dipakai.
+"""##### Dari diagram diatas dapat kita lihat bahwa model Random Forest adalah Model tertinggi daripada keempat model lainnya. Dengan itu, maka model ini yang akan dipakai. Model ini memberikan dampak nyata dalam meningkatkan efisiensi dan ketepatan dalam proses penilaian risiko diabetes pada masyarakat luas.
 
 ## Penutup
 
