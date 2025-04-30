@@ -38,17 +38,24 @@ zip_ref = zipfile.ZipFile('/content/diabetes-prediction-dataset.zip', 'r')
 zip_ref.extractall('/content')
 zip_ref.close()
 
-"""# DATA PREPROCESSING"""
+"""# DATA PREPROCESSING
+
+#### Data Processing merupakan proses memahami informasi dalam data dan menentukan kualitas dari data tersebut.
+"""
 
 df = pd.read_csv('/content/diabetes_prediction_dataset.csv')
 
 df.info()
+
+"""### Pengecekan data yang terdindikasi duplikat"""
 
 df.duplicated().sum()
 
 df.drop_duplicates(inplace=True)
 df.duplicated().sum()
 df['smoking_history'].value_counts() # 35816 no info so we should drop columns to avoid inaccureate data
+
+"""#### Melakukan Drop Column pada kolom smoking_history"""
 
 df.drop(columns=['smoking_history'],inplace=True) #preprocessing
 
@@ -113,8 +120,12 @@ plt.show()
 sns.boxplot(x='diabetes', y='age', hue='gender', data=df)
 plt.show()
 
+"""#### dilakukan proses pengubahan data kategorikal pada kolom gender menjadi nilai numerik"""
+
 encoder = LabelEncoder()
 df['gender'] = encoder.fit_transform(df['gender'])
+
+"""#### Proses untuk mendeteksi dan menghapus outlier (data pencilan) dari fitur numerik."""
 
 numeric_columns = df.select_dtypes(include=['number']).columns  # Semua angka
 Q1 = df[numeric_columns].quantile(0.25)
