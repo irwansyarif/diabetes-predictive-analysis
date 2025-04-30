@@ -155,7 +155,7 @@ Setiap model di atas dilatih menggunakan data latih dan dievaluasi menggunakan d
 Pada tahap modeling ini dibuat beberapa model dengan algoritma yang berbeda-beda. Pada proyek ini akan dibuat 4 model, diantaranya yaitu menggunakan KNN, Random Forest, SVM, Decision Tree dan Naive Bayes.
 Setelah melatih keempat model tersebut, didapatkan metriks akurasi sebagai berikut seperti pada diagram di bawah ini.
 
-![Perbandingan Akurasi Model]( ./model_accuracy_comparison.png)
+![Comparison Model]( ./perbandingan_model_akurasi.png)
 
 Dari hasil tersebut dapat diketahui bahwa model dengan algoritma Random Forest memiliki kinerja yang lebih baik. Untuk itu model tersebut yang akan dipilih untuk digunakan.
 
