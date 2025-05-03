@@ -18,13 +18,13 @@ Menjelaskan pernyataan masalah latar belakang:
 
 - Bagaimana memprediksi apakah seseorang berisiko mengidap diabetes berdasarkan data seperti usia, BMI, tekanan darah, dan kadar glukosa darah?
 
-- Dapatkah kita membangun model prediktif yang akurat dan berguna untuk membantu tenaga medis dalam mendeteksi diabetes secara dini?
+- Dapatkah kita membangun model prediktif yang mampu memprediksi risiko diabetes berdasarkan data sederhana seperti: usia, tekanan darah, glukosa, BMI, dll?
 
 ### Goals
 
 - Membangun model klasifikasi yang mampu memprediksi diabetes (ya/tidak) berdasarkan fitur-fitur seperti usia, jenis kelamin, riwayat merokok, tekanan darah, dan kadar HbA1c.
 
-- Menyediakan alat bantu keputusan berbasis AI/ML untuk dokter atau penyedia layanan kesehatan guna melakukan skrining awal.
+- Menggunakan data medis dasar seperti kadar glukosa, tekanan darah, BMI, usia, dan faktor lainnya sebagai input prediktor.
 
 ### Solution statements
 
@@ -91,7 +91,7 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 # Data Preparation
 
 - **Handling Duplicate**  
-  Dilakukan pengecekan data duplikat dan tidak ditemukan duplikasi, sehingga tidak ada data yang dihapus.
+  Dilakukan pengecekan data duplikat dan ditemukan data yang sama sebanyak 3854, sehingga dilakukan penghapusan.
 
 - **Handling Outlier**  
   Penanganan outlier dilakukan menggunakan metode IQR (Interquartile Range). Data yang berada di luar batas bawah dan batas atas dari rentang IQR dibuang agar tidak mengganggu proses pelatihan model, khususnya pada kolom `bmi` dan `blood_glucose_level`.
@@ -156,6 +156,17 @@ Pada tahap modeling ini dibuat beberapa model dengan algoritma yang berbeda-beda
 Setelah melatih keempat model tersebut, didapatkan metriks akurasi sebagai berikut seperti pada diagram di bawah ini.
 
 ![Comparison Model]( ./perbandingan_model_akurasi.png)
+> Gambar 5.1 Perbandingan Akurasi Model
+
+Dari hasil evaluasi model di atas, didapatkan hasil sebagai berikut:
+
+| Model                    | Akurasi  |
+|--------------------------|-------------|
+| KNN                      | 0.9612      |
+| Decision Tree            | 0.9502       |
+| Random Forest            | 0.9676       |
+| Support Vector Machine   | 0.9576       |
+| Naive Bayes              | 0.9093       |
 
 Dari hasil tersebut dapat diketahui bahwa model dengan algoritma Random Forest memiliki kinerja yang lebih baik. Untuk itu model tersebut yang akan dipilih untuk digunakan.
 
