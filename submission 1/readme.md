@@ -93,20 +93,21 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 - **Handling Duplicate**  
   Dilakukan pengecekan data duplikat dan ditemukan data yang sama sebanyak 3854, sehingga dilakukan penghapusan.
 
+- **Handling Categorical Features**  
+  Kolom kategori seperti `gender` dan `smoking_history` diolah menggunakan teknik encoding. Teknik ini bertujuan agar data dapat diterima oleh algoritma machine learning yang memerlukan data numerik.
+
 - **Handling Outlier**  
   Penanganan outlier dilakukan menggunakan metode IQR (Interquartile Range). Data yang berada di luar batas bawah dan batas atas dari rentang IQR dibuang agar tidak mengganggu proses pelatihan model, khususnya pada kolom `bmi` dan `blood_glucose_level`.
 
-- **Handling Categorical Features**  
-  Kolom kategori seperti `gender` dan `smoking_history` diolah menggunakan teknik encoding. Teknik ini bertujuan agar data dapat diterima oleh algoritma machine learning yang memerlukan data numerik.
 
 - **Drop Kolom**  
   Tidak ada kolom yang dihapus karena semua fitur dianggap relevan untuk kebutuhan prediksi.
 
-- **Normalisasi Fitur**  
-  Normalisasi dilakukan menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html) agar seluruh nilai berada dalam rentang 0 hingga 1. Ini penting agar model tidak bias terhadap fitur dengan skala besar.
-
 - **Split Data**  
   Dataset dibagi menjadi data latih dan data uji menggunakan `train_test_split` dengan proporsi 80% untuk pelatihan dan 20% untuk pengujian. Hal ini bertujuan untuk mengevaluasi performa model secara adil pada data yang belum pernah dilihat.
+
+- **Normalisasi Fitur**  
+  Normalisasi dilakukan menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html) agar seluruh nilai berada dalam rentang 0 hingga 1. Ini penting agar model tidak bias terhadap fitur dengan skala besar.
 
 
 ## Tahap preparation
