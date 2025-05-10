@@ -99,7 +99,6 @@ Untuk memahami data prediksi diabetes dilakukan analisis eksploratif menggunakan
 - **Handling Outlier**  
   Penanganan outlier dilakukan menggunakan metode IQR (Interquartile Range). Data yang berada di luar batas bawah dan batas atas dari rentang IQR dibuang agar tidak mengganggu proses pelatihan model, khususnya pada kolom `bmi` dan `blood_glucose_level`.
 
-
 - **Drop Kolom**  
   Tidak ada kolom yang dihapus karena semua fitur dianggap relevan untuk kebutuhan prediksi.
 
