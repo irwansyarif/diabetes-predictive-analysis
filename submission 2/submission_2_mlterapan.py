@@ -46,7 +46,10 @@ anime = pd.read_csv('/content/top_anime_dataset.csv')
 print('Jumlah data judul anime: ', len(anime.anime_id.unique()))
 print('Jumlah data ratings score: ', len(anime.score.unique()))
 
-"""## Univariate Exploratory Data (EDA)"""
+"""## Univariate Exploratory Data (EDA)
+
+Exploratory data analysis merupakan proses investigasi awal pada data untuk menganalisis karakteristik, menemukan pola, anomali, dan memeriksa asumsi pada data. Teknik ini biasanya menggunakan bantuan statistik dan representasi grafis atau visualisasi.
+"""
 
 anime.info()
 
@@ -66,9 +69,15 @@ plt.show()
 anime.hist(bins=50, figsize=(20,15))
 plt.show()
 
+""" Menampilkan Jumlah Nilai Kosong (NaN) di Setiap Kolom dari DataFrame anime."""
+
 anime.isnull().sum()
 
+"""Terdapat data yang duplikat pada kolom english_name, japanese_names, genres, sypnosis, type, episodes, premiered, producers, studios, rank"""
+
 print(f'Jumlah data anime yang duplikat: {anime.duplicated().sum()}')
+
+"""Menjadikan dataset hanya memiliki kolom anime_id, genres, score, type, dan studios"""
 
 # Keep only the desired columns
 columns_to_keep = ['anime_id', 'name', 'genres', 'score', 'type', 'studios']
@@ -81,18 +90,31 @@ print(anime.head())
 
 anime.head()
 
-"""### Splitting data genre from dataset"""
+"""### Splitting data genre from dataset
+
+Membagi dataset berdasarkan genre
+"""
 
 animes_new = anime.assign(genres=anime.genres.str.split('|')).explode('genres').reset_index(drop=True)
 animes_new
 
-"""### Menangani missing value"""
+"""### Menangani missing value
+
+Menampilkan jumlah nilai yang hilang (NaN) di setiap kolom dari DataFrame animes_new.
+"""
 
 animes_new.isnull().sum()
+
+"""Menghapus semua baris yang mengandung nilai kosong (NaN) dari DataFrame animes_new, dan menyimpannya ke variabel animes."""
 
 # Membuang data yang kosong
 animes = animes_new.dropna()
 animes
+
+"""Menyortir DataFrame animes berdasarkan kolom anime_id secara menaik (dari angka kecil ke besar).
+
+
+"""
 
 # Menampilkan data dan mengurutkannya berdasarkan movieId
 animes = animes.sort_values('anime_id', ascending=True)
@@ -107,6 +129,10 @@ print('Genres: ', animes.genres.unique())
 # Menghapus data duplikat pada variabel preparation
 animes = animes.drop_duplicates('anime_id')
 animes
+
+"""#### Mengonversi data series anime_id,name, dan genres menjadi bentuk list
+
+"""
 
 # Mengonversi data series ‘anime_id’ menjadi bentuk list
 anime_id = animes['anime_id'].tolist()
@@ -123,7 +149,11 @@ print(len(anime_genre))
 
 """# Model Development dengan Content Based Filtering
 
-TF-IDF Vectorizer
+Content-Based Filtering adalah metode rekomendasi yang menggunakan informasi atau fitur dari item (seperti deskripsi, genre, atau atribut lainnya) untuk merekomendasikan item serupa.
+
+### TF-IDF Vectorizer
+
+Salah satu pendekatan populer adalah menggunakan TF-IDF (Term Frequency-Inverse Document Frequency) Vectorizer, yang mengubah teks (misalnya, sinopsis film atau deskripsi produk) menjadi representasi numerik berdasarkan seberapa penting kata tersebut dalam dokumen tertentu dibandingkan seluruh koleksi.
 """
 
 # Inisialisasi TfidfVectorizer
@@ -149,7 +179,10 @@ pd.DataFrame(
     index=animes.genres
 ).sample(12, axis=1).sample(10, axis=0)
 
-"""##Cosine Similiarity"""
+"""##Cosine Similiarity
+
+Cosine Similarity adalah ukuran kemiripan antara dua vektor dalam ruang vektor berdimensi tinggi. Nilainya berkisar dari -1 hingga 1, tetapi dalam konteks TF-IDF dan rekomendasi, nilainya biasanya antara 0 dan 1, karena semua nilai dalam vektor TF-IDF adalah non-negatif.
+"""
 
 # Menghitung cosine similarity pada matrix tf-idf
 cosine_sim = cosine_similarity(tfidf_matrix)
