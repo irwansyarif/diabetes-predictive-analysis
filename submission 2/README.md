@@ -16,17 +16,19 @@ Industri anime mengalami pertumbuhan pesat dengan ribuan judul yang dirilis seti
 ### Goals
 Untuk menjawab permasalahan diatas maka dibuatlah sistem rekomendasi dengan tujuan sebagai berikut:
 
-- Membangun sistem rekomendasi anime yang memanfaatkan konten deskriptif dari masing-masing judul.
-- Menggabungkan informasi seperti genre, sinopsis, dan skor ke dalam fitur gabungan yang dapat dianalisis.
-- Menerapkan metode TF-IDF dan cosine similarity untuk mengukur kesamaan antar anime.
-- Menyediakan rekomendasi judul anime yang mirip berdasarkan input dari pengguna.
+- Mengembangkan sistem rekomendasi anime berbasis content-based filtering yang dapat memberikan saran anime yang relevan sesuai preferensi pengguna.
+- Mengidentifikasi dan menggunakan fitur yang paling berpengaruh (seperti genres, synopsis, dan score) untuk mendeskripsikan kemiripan antar anime.
+- Membangun fitur gabungan dari data genre, sinopsis, dan skor sebagai representasi teks yang dapat dianalisis dengan metode tekstual.
+- Menerapkan algoritma cosine similarity untuk menghitung dan menilai tingkat kemiripan antar anime berdasarkan vektorisasi teks.
 
-### Solution Approach
+### Solution Statements
 - Melakukan eksplorasi dan praproses data pada kolom genres, synopsis, dan score.
 - Melakukan vektorisasi teks menggunakan TF-IDF untuk representasi numerik.
 - Menghitung kemiripan antar anime menggunakan cosine similarity.
-- Menyediakan antarmuka atau fungsi sederhana untuk memasukkan judul dan mendapatkan rekomendasi.
-
+- Fungsi Rekomendasi Interaktif
+Dibuat fungsi sederhana yang menerima input judul anime dan mengembalikan lima rekomendasi anime paling mirip berdasarkan skor kemiripan tertinggi.
+- Evaluasi Kualitatif Hasil Rekomendasi
+Sistem diuji dengan contoh kasus (misalnya, judul anime populer seperti Sousou no Frieren) untuk melihat apakah hasil rekomendasi konsisten dari segi genre dan nuansa cerita. 
 
 ## Data Understanding
 ### EDA - Deskripsi Variabel
@@ -35,23 +37,49 @@ Untuk menjawab permasalahan diatas maka dibuatlah sistem rekomendasi dengan tuju
 |----------|-----------------------------------------------------------|
 | Title    | Top 15,000 Ranked Anime Dataset (Update to 3/2025)                                        |
 | Source   |[Kaggle](https://www.kaggle.com/datasets/quanthan/top-15000-ranked-anime-dataset-update-to-32025?select=top_anime_dataset.csv)       |                 
-|Size| 24.31 |                   
+| Ukuran File | CSV (24,31MB)
 
 
 Berikut informasi pada dataset: Kumpulan dataset ini dikumpulkan dari platform [MyAnimeList](https://myanimelist.net/)  , komunitas online populer dan database untuk penggemar anime dan manga. Platform ini menyediakan informasi berharga tentang acara anime, profil pengguna, dan skor pengguna untuk berbagai anime. Dataset yang digunakan pada proyek kali ini disediakan secara publik di kaggle dengan nama datasets yaitu: _Anime Dataset 2023_ . Dataset ini dapat diunduh di Kaggle : [Top 15,000 Ranked Anime Dataset (Update to 3/2025)](https://www.kaggle.com/datasets/quanthan/top-15000-ranked-anime-dataset-update-to-32025?select=top_anime_dataset.csv) .
+
+### Jumlah Data
+Dataset memiliki total 15,000 baris dan 22 kolom, yang terdiri dari 21 fitur dan 1 label target (genres).
+
+### Kondisi Data
+- Missing Value:
+Tidak ditemukan nilai kosong secara eksplisit pada dataset. Namun, pada fitur smoking_history, terdapat nilai Unknown yang berfungsi sebagai kategori tersendiri dan perlu diperlakukan secara khusus.
+
+- Duplikat:
+Sudah dilakukan pemeriksaan, terdapat 35 Duplikat yang ada pada dataset ini.
 
 
 **Berikut informasi pada dataset** :
 ### Variable - variable pada dataset
 Kolom datasets anime memiliki informasi berikut:
-- `anime_id`: ID unik untuk setiap anime
-- `name`: Judul utama anime
-- `genres`:	Kategori genre anime (bisa lebih dari satu)
-- `synopsis`:	Ringkasan cerita anime
-- `score`:	Nilai rata-rata yang diberikan pengguna
-- `members`:	Jumlah pengguna yang menambahkan ke daftar
-- `favorites`:	Jumlah pengguna yang memberi tanda favorit
-- `type`	Jenis anime (TV, Movie, OVA, dll.)
+- `anime_id`: ID unik buat anime di MyAnimeList (MAL ID).
+- `anime_url`: Link ke halaman anime di MyAnimeList.
+- `image_url`: Link gambar utama atau cover anime (format JPEG).
+- `name`: Judul resmi anime.
+- `english_name`: Judul resmi dalam bahasa Inggris (kalau ada).
+- `japanese_names`: Judul resmi dalam bahasa Jepang (kalau ada).
+- `score`: Nilai rata-rata dari anime di MyAnimeList (skala 1–10, makin tinggi makin bagus).
+- `genres`: Daftar genre anime yang dipisah pakai koma (contoh: Action, Comedy, Fantasy).
+- `themes`: Daftar tema yang ada di anime (contoh: Psychological, Time Travel).
+- `demographics`: Target penonton anime-nya (misalnya: shounen, shoujo, seinen, josei).
+- `synopsis`: Ringkasan cerita atau sinopsis anime.
+- `type`: Jenis anime-nya (contoh: TV, Movie, OVA, ONA, Special, Music).
+- `episodes`: Jumlah episode anime-nya (buat yang bentuknya serial TV, OVA, dll).
+- `premiered`: Musim dan tahun pertama kali anime ini tayang (contoh: "Fall 2013").
+- `producers`: Daftar produser atau studio yang terlibat, dipisah pakai koma.
+- `studios`: Studio animasi yang ngerjain anime-nya, juga dipisah pakai koma.
+- `source`: Sumber cerita aslinya dari mana (contoh: Manga, Original, Light Novel, Game).
+- `duration`: Lama durasi per episodenya (dalam menit).
+- `rating`: Rating usia penonton (misalnya: PG-13, R+, G).
+- `rank`: Peringkat anime berdasarkan nilai (semakin kecil angkanya, semakin tinggi posisinya). Dataset ini fokus ke 15.000 anime teratas.
+- `popularity`: Peringkat popularitas anime di MyAnimeList (semakin kecil angkanya, makin populer).
+- `favorites`: Berapa banyak orang yang nge-favoritin anime ini di MyAnimeList.
+- `scored_by`: Jumlah orang yang ngasih nilai buat anime ini.
+- `members`: Jumlah orang yang masukin anime ini ke daftar mereka di MyAnimeList.
 
 
 ![download](./visualisasi_fitur.png)
@@ -60,7 +88,29 @@ Gambar 1. Distribusi Fitur
 
 ## Data Preparation
 
-Pada proses Data Preparation dilakukan _text cleaning_ untuk membersihkan teks dari tanda baca dan URL. Untuk data yang _missing value_ adalah dengan menerapkan metode _dropping_ menggunakan drop(). adapun alasan mengapa Metode _dropping_ ini digunakan karna data yang akan di hapus tidak mempengaruhi model. Yang awalnya jumlah dataset sebanyak `14952` dan dengan menghapus jumlah _missing value_ dataset sekarang menjadi `13229`. Untuk membangun sistem rekomendasi pada proyek kali ini digunakan fitur `name, score, genres, type, studios`. Sistem rekomendasi berbasis genre, atribut yang akan digunakan yakni `name dan genres`. Sistem rekomendasi dengan metode collaborative filtering, atribut yang digunakan yakni: `name, score dan type`. Dan dilakukan _one-hot encoding_ untuk mengubah fitur `type`dan `score`, digunakan untuk mengubah variabel kategorikal menjadi bentuk yang lebih mudah dipahami oleh model pembelajaran mesin.
+- **Memilih Kolom yang Relevan**
+Memilih kolom-kolom yang akan digunakan untuk analisis dan pemodelan, yaitu anime_id, name, genres, score, type, dan studios. Kolom-kolom lain yang tidak relevan dihapus.
+
+- **Splitting Data Genre**
+memisahkan data genre yang awalnya digabung dalam satu kolom dengan pemisah '|'. Setiap genre dipisahkan menjadi baris baru menggunakan fungsi explode().
+
+- **Handling Missing Values**
+Dilakukan pengecekan jumlah nilai kosong (missing) pada dataset.
+Kolom yang memiliki missing values adalah genres, score, dan studios.
+Baris dengan missing values dihapus menggunakan .dropna().
+
+- **Sorting Data:**
+Data diurutkan berdasarkan kolom anime_id secara menaik (ascending) menggunakan fungsi sort_values()
+
+- **Handling Duplicate**
+Dilakukan pengecekan terhadap data duplikat berdasarkan nama anime (name). Duplikat yang ditemukan dihapus untuk menghindari duplikasi hasil rekomendasi.
+
+- **Mengonversi Data ke List**
+Data dari kolom anime_id, name, dan genres dikonversi menjadi bentuk list menggunakan fungsi tolist(). Data ini akan digunakan untuk membangun model rekomendasi.
+
+- **Text Vectorization (TF-IDF)**
+Data pada kolom combined_features kemudian diubah menjadi representasi numerik menggunakan teknik TF-IDF (Term Frequency–Inverse Document Frequency). Teknik ini mengukur pentingnya kata dalam dokumen relatif terhadap seluruh dokumen lainnya.
+
 
 ## Modeling 
 Pada proyek ini hanya gunakan Model Cosine Similarity. Algoritma ini akan mempelajari kesamaan antar data dalam fitur yang ada.
