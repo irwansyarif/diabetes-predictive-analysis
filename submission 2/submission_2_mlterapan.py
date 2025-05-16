@@ -195,7 +195,7 @@ print('Shape:', cosine_sim_df.shape)
 # Melihat similarity matrix pada setiap nama anime
 cosine_sim_df.sample(5, axis=1).sample(10, axis=0)
 
-"""#Fungsi Anime Recommendation"""
+"""#Pengujian Anime Recommendation"""
 
 def anime_recommendations(title, similarity_data=cosine_sim_df, items=animes[['name', 'genres']], k=10):
     # Mengambil data dengan menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan
@@ -221,7 +221,27 @@ animes[animes.name.eq(anime_title)]
 anime_recommendations = anime_recommendations(anime_title)
 anime_recommendations
 
-"""### Metrik yang cocok dipakai untuk kasus content based filtering adalah Precision.
+"""# Evaluation
 
-Berdasarkan hasil di atas dapat disimpulkan bahwa dari 10 judul film yang direkomendasikan, ada 10 item yang relevan, oleh karena itu Precision dari model tersebut adalah 10/10 atau 100%
+### Metrik yang cocok dipakai untuk kasus content based filtering adalah Precision.
 """
+
+relevant_genres = {"Adventure", "Drama", "Fantasy"}  # gunakan set agar urutan tidak penting
+
+# Fungsi untuk memeriksa kecocokan genre
+def is_relevant(genres):
+    genres_set = set(genres.split(', '))  # ubah string genre menjadi set
+    return relevant_genres.issubset(genres_set)  # periksa apakah semua genre relevan ada dalam genres_set
+
+# Tambahkan kolom apakah film relevan
+anime_recommendations['is_relevant'] = anime_recommendations['genres'].apply(is_relevant)
+
+# Hitung True Positives dan Total Recommended
+true_positives = anime_recommendations['is_relevant'].sum()
+total_recommended = len(anime_recommendations)
+
+# Precision
+precision = true_positives / total_recommended * 100
+print(f"Precision: {precision:.2f}%")
+
+"""Dari hasil diatas, nilai metriks precesion sebesar 100.00% untuk 10 anime yang direkomendasikan berdasarkan kemiripan genre."""

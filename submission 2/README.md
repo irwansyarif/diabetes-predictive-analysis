@@ -64,8 +64,6 @@ Kolom datasets anime memiliki informasi berikut:
 - `japanese_names`: Judul resmi dalam bahasa Jepang (kalau ada).
 - `score`: Nilai rata-rata dari anime di MyAnimeList (skala 1–10, makin tinggi makin bagus).
 - `genres`: Daftar genre anime yang dipisah pakai koma (contoh: Action, Comedy, Fantasy).
-- `themes`: Daftar tema yang ada di anime (contoh: Psychological, Time Travel).
-- `demographics`: Target penonton anime-nya (misalnya: shounen, shoujo, seinen, josei).
 - `synopsis`: Ringkasan cerita atau sinopsis anime.
 - `type`: Jenis anime-nya (contoh: TV, Movie, OVA, ONA, Special, Music).
 - `episodes`: Jumlah episode anime-nya (buat yang bentuknya serial TV, OVA, dll).
