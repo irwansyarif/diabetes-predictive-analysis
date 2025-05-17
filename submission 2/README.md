@@ -26,7 +26,7 @@ Untuk menjawab permasalahan diatas maka dibuatlah sistem rekomendasi dengan tuju
 - Melakukan vektorisasi teks menggunakan TF-IDF untuk representasi numerik.
 - Menghitung kemiripan antar anime menggunakan cosine similarity.
 - Fungsi Rekomendasi Interaktif
-Dibuat fungsi sederhana yang menerima input judul anime dan mengembalikan lima rekomendasi anime paling mirip berdasarkan skor kemiripan tertinggi.
+Dibuat fungsi sederhana yang menerima input judul anime dan mengembalikan sepuluh rekomendasi anime paling mirip berdasarkan skor kemiripan tertinggi.
 - Evaluasi Kualitatif Hasil Rekomendasi
 Sistem diuji dengan contoh kasus (misalnya, judul anime populer seperti Sousou no Frieren) untuk melihat apakah hasil rekomendasi konsisten dari segi genre dan nuansa cerita. 
 
@@ -207,7 +207,7 @@ dimana:
 - FP (False Positive): Jumlah data yang diprediksi positif, namun kenyataannya adalah negatif.
 
 
-*Interpretasi* dari hasil presisi berdasarkan _Tabel 1. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres)_. menunjukkan bahwa presisi model rekomendasi Top-5 adalah sempurna, yaitu 5/5 atau 100%. Ini menandakan bahwa model tersebut memberikan rekomendasi dengan tingkat presisi yang sangat tinggi, yakni 100%. Ini sesuai dengan hasil pengujian yang menunjukkan bahwa model mampu memberikan rekomendasi dengan nama dan genre yang mirip dengan anime `Sousou no Frieren`, seperti Adventure, Drama, Fantasy. Hasil rekomendasi menampilkan lima aplikasi dengan genre yang serupa dengan `Sousou no Frieren`.
+*Interpretasi* dari hasil presisi berdasarkan _Tabel 1. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres)_. menunjukkan bahwa presisi model rekomendasi Top-5 adalah sempurna, yaitu 5/5 atau 100%. Ini menandakan bahwa model tersebut memberikan rekomendasi dengan tingkat presisi yang sangat tinggi, yakni 100%. Ini sesuai dengan hasil pengujian yang menunjukkan bahwa model mampu memberikan rekomendasi dengan nama dan genre yang mirip dengan anime `Sousou no Frieren`, seperti Adventure, Drama, Fantasy. Hasil rekomendasi menampilkan sepuluh aplikasi dengan genre yang serupa dengan `Sousou no Frieren`.
  
 ## Referensi
 1. Lops, P., de Gemmis, M., & Semeraro, G. (2011). Content-based Recommender Systems: State of the Art and Trends. In F. Ricci, L. Rokach, B. Shapira, & P. B. Kantor (Eds.), Recommender Systems Handbook (pp. 73–105). Springer. Retrieved from: https://www.researchgate.net/publication/226098747_Content-based_Recommender_Systems_State_of_the_Art_and_Trends
