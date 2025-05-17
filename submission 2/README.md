@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Ahmad Wandi
+# Laporan Proyek Machine Learning
 Ini adalah proyek akhir sistem rekomendasi untuk memenuhi submission dicoding. Proyek ini membangun model berbasis _content based filtering_ yang dapat menentukan top-N rekomendasi anime dan model _K-Nearest Neighbor_.
 ## Project Overview
 
@@ -155,7 +155,7 @@ Kekurangan _Cosine Similarity_:
 
 
 ## Evaluation
-Dalam proyek ini, dua metrik evaluasi yang berbeda akan digunakan berdasarkan pada metode pendekatan yang digunakan, yaitu *Precision* untuk pendekatan *Content-Based Filtering* dan *Root Mean Square Error* (RMSE) untuk pendekatan *Collaborative-Based Filtering*.
+Dalam proyek ini, dua metrik evaluasi yang berbeda akan digunakan berdasarkan pada metode pendekatan yang digunakan, yaitu *Precision* untuk pendekatan *Content-Based Filtering*
 
 ### 1. *Precision* (Presisi)
 
@@ -175,18 +175,11 @@ Tabel 8. Evaluasi Precision dengan Pendekatan Content-Based Filtering (Cosine Si
 |------------|---------------------|-----------------------|
 | Content-Based Filtering | 7 | 3 |
 
-Tabel 9. Evaluasi Precision dengan Pendekatan Collaborative-Based Filtering (Euclidean Distance)
-
-| Pendekatan | True Positives (TP) | False Positives (FP) |
-|------------|---------------------|-----------------------|
-| Collaborative-Based Filtering | 8 | 2 |
-
-Dalam kedua pendekatan, terlihat data kursus yang memiliki kata "Adventure", "Fantasy" dan "Drama" dalam `name` dan `genres`. 
+Dalam pendekatan yang digunakan, terlihat data kursus yang memiliki kata "Adventure", "Fantasy" dan "Drama" dalam `name` dan `genres`. 
 
 Jumlah True Positives (TP) mencerminkan kursus yang sesuai dengan kriteria ini, sementara jumlah *False Positives* (FP) mencerminkan kursus yang tidak relevan tetapi salah diklasifikasikan sebagai relevan.
 
-Dengan demikian, dalam pendekatan *Content-Based Filtering*, terdapat 7 *True Positives* (TP) dan 3 *False Positives* (FP), sedangkan dalam pendekatan *Collaborative-Based Filtering*, terdapat 8 *True Positives* (TP) dan 2 *False Positives* (FP).
-
+Dengan demikian, dalam pendekatan *Content-Based Filtering*, terdapat 7 *True Positives* (TP) dan 3 *False Positives* (FP).
 Dengan menggunakan nilai TP dan FP, Precision dapat dihitung dengan menggunakan rumus berikut:
 
 ```sh
@@ -198,18 +191,9 @@ Untuk pendekatan Content-Based Filtering (Cosine Similarity):
 Precision = TP / (TP + FP) = 7 / (7 + 3) = 0.7 = 70%
 ```
 
-Untuk pendekatan Collaborative-Based Filtering (Euclidean Distance):
-```sh
-Precision = TP / (TP + FP) = 8 / (8 + 2) = 0.8 = 80%
-```
 
-Hasil *Precision* dari kedua pendekatan tersebut adalah 70% untuk pendekatan *Content-Based Filtering* (Cosine Similarity) dan 80% untuk pendekatan *Collaborative-Based Filtering* (Euclidean Distance). 
-
-Ini mengindikasikan bahwa pendekatan *Collaborative-Based Filtering* memberikan hasil *Precision* yang lebih tinggi dibandingkan dengan pendekatan *Content-Based Filtering* dalam konteks spesifik ini.
-
-Pada pendekatan *Collaborative-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan ("Adventure", "Fantasy" dan "Drama"). 
-
-Sementara itu, pada pendekatan *Content-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan.
+Hasil *Precision* dari kedua pendekatan tersebut adalah 70% untuk pendekatan *Content-Based Filtering* (Cosine Similarity).
+Pada pendekatan *Content-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan.
 
 ### Precission
 _Precission_ adalah metrik yang penting untuk mengevaluasi kinerja model pengelompokan. Metrik ini membantu dalam memahami seberapa akurat model dalam mengidentifikasi data positif. Nilai presisi yang tinggi menunjukkan bahwa model jarang membuat prediksi positif yang salah, sehingga prediksi positifnya dapat lebih dipercaya.[[7](https://esairina.medium.com/memahami-confusion-matrix-accuracy-precision-recall-specificity-dan-f1-score-610d4f0db7cf)] 
