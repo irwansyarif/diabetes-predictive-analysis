@@ -155,7 +155,61 @@ Kekurangan _Cosine Similarity_:
 
 
 ## Evaluation
-Metrik evaluasi digunakan untuk menilai seberapa baik performa suatu model. Dalam konteks ini, metrik evaluasi yang umum digunakan untuk mengukur kinerja model adalah Precission. Metrik ini bertujuan untuk memberikan gambaran tentang seberapa baik model bekerja dalam melakukan tugas tertentu, seperti klasifikasi atau klastering data.
+Dalam proyek ini, dua metrik evaluasi yang berbeda akan digunakan berdasarkan pada metode pendekatan yang digunakan, yaitu *Precision* untuk pendekatan *Content-Based Filtering* dan *Root Mean Square Error* (RMSE) untuk pendekatan *Collaborative-Based Filtering*.
+
+### 1. *Precision* (Presisi)
+
+*Precision* adalah metrik evaluasi yang digunakan untuk mengukur keakuratan rekomendasi dalam pendekatan *Content-Based Filtering*. 
+
+Presisi menghitung persentase rekomendasi yang relevan dari total rekomendasi yang diberikan kepada pengguna.
+
+Presisi dihitung dengan membagi jumlah rekomendasi yang relevan dengan jumlah total rekomendasi yang diberikan. 
+
+Semakin tinggi nilai presisi, semakin akurat sistem dalam memberikan rekomendasi yang relevan kepada pengguna.
+
+Berikut adalah tabel yang berisi nilai *True Positives* (TP) dan *False Positives* (FP) untuk kedua pendekatan, berdasarkan kriteria "Adventure", "Fantasy" dan "Drama" pada kolom `name` dan `genres`:
+
+Tabel 8. Evaluasi Precision dengan Pendekatan Content-Based Filtering (Cosine Similarity)
+
+| Pendekatan | True Positives (TP) | False Positives (FP) |
+|------------|---------------------|-----------------------|
+| Content-Based Filtering | 7 | 3 |
+
+Tabel 9. Evaluasi Precision dengan Pendekatan Collaborative-Based Filtering (Euclidean Distance)
+
+| Pendekatan | True Positives (TP) | False Positives (FP) |
+|------------|---------------------|-----------------------|
+| Collaborative-Based Filtering | 8 | 2 |
+
+Dalam kedua pendekatan, terlihat data kursus yang memiliki kata "Adventure", "Fantasy" dan "Drama" dalam `name` dan `genres`. 
+
+Jumlah True Positives (TP) mencerminkan kursus yang sesuai dengan kriteria ini, sementara jumlah *False Positives* (FP) mencerminkan kursus yang tidak relevan tetapi salah diklasifikasikan sebagai relevan.
+
+Dengan demikian, dalam pendekatan *Content-Based Filtering*, terdapat 7 *True Positives* (TP) dan 3 *False Positives* (FP), sedangkan dalam pendekatan *Collaborative-Based Filtering*, terdapat 8 *True Positives* (TP) dan 2 *False Positives* (FP).
+
+Dengan menggunakan nilai TP dan FP, Precision dapat dihitung dengan menggunakan rumus berikut:
+
+```sh
+Precision = TP / (TP + FP)
+```
+
+Untuk pendekatan Content-Based Filtering (Cosine Similarity):
+```sh
+Precision = TP / (TP + FP) = 7 / (7 + 3) = 0.7 = 70%
+```
+
+Untuk pendekatan Collaborative-Based Filtering (Euclidean Distance):
+```sh
+Precision = TP / (TP + FP) = 8 / (8 + 2) = 0.8 = 80%
+```
+
+Hasil *Precision* dari kedua pendekatan tersebut adalah 70% untuk pendekatan *Content-Based Filtering* (Cosine Similarity) dan 80% untuk pendekatan *Collaborative-Based Filtering* (Euclidean Distance). 
+
+Ini mengindikasikan bahwa pendekatan *Collaborative-Based Filtering* memberikan hasil *Precision* yang lebih tinggi dibandingkan dengan pendekatan *Content-Based Filtering* dalam konteks spesifik ini.
+
+Pada pendekatan *Collaborative-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan ("Adventure", "Fantasy" dan "Drama"). 
+
+Sementara itu, pada pendekatan *Content-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan.
 
 ### Precission
 _Precission_ adalah metrik yang penting untuk mengevaluasi kinerja model pengelompokan. Metrik ini membantu dalam memahami seberapa akurat model dalam mengidentifikasi data positif. Nilai presisi yang tinggi menunjukkan bahwa model jarang membuat prediksi positif yang salah, sehingga prediksi positifnya dapat lebih dipercaya.[[7](https://esairina.medium.com/memahami-confusion-matrix-accuracy-precision-recall-specificity-dan-f1-score-610d4f0db7cf)] 
