@@ -48,17 +48,17 @@ Dataset memiliki total 15,000 baris dan 22 kolom, yang terdiri dari 21 fitur dan
 ### Kondisi Data
 - Missing Value:
 Ditemukan nilai kosong (NaN) pada beberapa kolom dalam dataset anime. Hal ini terlihat dari hasil anime.isnull().sum() yang menunjukkan jumlah nilai kosong untuk setiap kolom. Beberapa kolom dengan jumlah missing value yang cukup signifikan antara lain:
-- `english_name`: 6645 missing values
-- `genres`: 1603 missing values
-- `synopsis`: 473 missing values
-- `episodes`: 115 missing values
-- `premiered`: 10314 missing values
-- `producers`: 5432 missing values
-- `studios`: 2383 missing values
-- `rating`: 68 missing values
-- `rank`: 3079 missing values
-- `type`: 1 missing value
-- `japanese_names`: 47 missing values
+1. `english_name`: 6645 missing values
+2. `genres`: 1603 missing values
+3. `synopsis`: 473 missing values
+4. `episodes`: 115 missing values
+5. `premiered`: 10314 missing values
+6. `producers`: 5432 missing values
+7. `studios`: 2383 missing values
+8. `rating`: 68 missing values
+9. `rank`: 3079 missing values
+10. `type`: 1 missing value
+11. `japanese_names`: 47 missing values
 
 - Duplikat:
 Sudah dilakukan pemeriksaan, terdapat 35 Duplikat yang ada pada dataset ini.
