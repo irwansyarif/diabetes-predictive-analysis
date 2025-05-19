@@ -47,7 +47,18 @@ Dataset memiliki total 15,000 baris dan 22 kolom, yang terdiri dari 21 fitur dan
 
 ### Kondisi Data
 - Missing Value:
-Tidak ditemukan nilai kosong secara eksplisit pada dataset. Namun, pada fitur smoking_history, terdapat nilai Unknown yang berfungsi sebagai kategori tersendiri dan perlu diperlakukan secara khusus.
+Ditemukan nilai kosong (NaN) pada beberapa kolom dalam dataset anime. Hal ini terlihat dari hasil anime.isnull().sum() yang menunjukkan jumlah nilai kosong untuk setiap kolom. Beberapa kolom dengan jumlah missing value yang cukup signifikan antara lain:
+- `english_name`: 6645 missing values
+- `genres`: 1603 missing values
+- `synopsis`: 473 missing values
+- `episodes`: 115 missing values
+- `premiered`: 10314 missing values
+- `producers`: 5432 missing values
+- `studios`: 2383 missing values
+- `rating`: 68 missing values
+- `rank`: 3079 missing values
+- `type`: 1 missing value
+- `japanese_names`: 47 missing values
 
 - Duplikat:
 Sudah dilakukan pemeriksaan, terdapat 35 Duplikat yang ada pada dataset ini.
@@ -156,44 +167,6 @@ Kekurangan _Cosine Similarity_:
 
 ## Evaluation
 Dalam proyek ini, dua metrik evaluasi yang berbeda akan digunakan berdasarkan pada metode pendekatan yang digunakan, yaitu *Precision* untuk pendekatan *Content-Based Filtering*
-
-### 1. *Precision* (Presisi)
-
-*Precision* adalah metrik evaluasi yang digunakan untuk mengukur keakuratan rekomendasi dalam pendekatan *Content-Based Filtering*. 
-
-Presisi menghitung persentase rekomendasi yang relevan dari total rekomendasi yang diberikan kepada pengguna.
-
-Presisi dihitung dengan membagi jumlah rekomendasi yang relevan dengan jumlah total rekomendasi yang diberikan. 
-
-Semakin tinggi nilai presisi, semakin akurat sistem dalam memberikan rekomendasi yang relevan kepada pengguna.
-
-Berikut adalah tabel yang berisi nilai *True Positives* (TP) dan *False Positives* (FP) untuk kedua pendekatan, berdasarkan kriteria "Adventure", "Fantasy" dan "Drama" pada kolom `name` dan `genres`:
-
-Tabel 8. Evaluasi Precision dengan Pendekatan Content-Based Filtering (Cosine Similarity)
-
-| Pendekatan | True Positives (TP) | False Positives (FP) |
-|------------|---------------------|-----------------------|
-| Content-Based Filtering | 7 | 3 |
-
-Dalam pendekatan yang digunakan, terlihat data kursus yang memiliki kata "Adventure", "Fantasy" dan "Drama" dalam `name` dan `genres`. 
-
-Jumlah True Positives (TP) mencerminkan kursus yang sesuai dengan kriteria ini, sementara jumlah *False Positives* (FP) mencerminkan kursus yang tidak relevan tetapi salah diklasifikasikan sebagai relevan.
-
-Dengan demikian, dalam pendekatan *Content-Based Filtering*, terdapat 7 *True Positives* (TP) dan 3 *False Positives* (FP).
-Dengan menggunakan nilai TP dan FP, Precision dapat dihitung dengan menggunakan rumus berikut:
-
-```sh
-Precision = TP / (TP + FP)
-```
-
-Untuk pendekatan Content-Based Filtering (Cosine Similarity):
-```sh
-Precision = TP / (TP + FP) = 7 / (7 + 3) = 0.7 = 70%
-```
-
-
-Hasil *Precision* dari kedua pendekatan tersebut adalah 70% untuk pendekatan *Content-Based Filtering* (Cosine Similarity).
-Pada pendekatan *Content-Based Filtering*, dari 10 rekomendasi yang diberikan, 10 di antaranya relevan dengan kriteria yang ditentukan.
 
 ### Precission
 _Precission_ adalah metrik yang penting untuk mengevaluasi kinerja model pengelompokan. Metrik ini membantu dalam memahami seberapa akurat model dalam mengidentifikasi data positif. Nilai presisi yang tinggi menunjukkan bahwa model jarang membuat prediksi positif yang salah, sehingga prediksi positifnya dapat lebih dipercaya.[[7](https://esairina.medium.com/memahami-confusion-matrix-accuracy-precision-recall-specificity-dan-f1-score-610d4f0db7cf)] 
